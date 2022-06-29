@@ -38,14 +38,14 @@ function addItems() {
 function addPlatforms() {
   platforms = game.add.physicsGroup();
   platforms.create(10, 350, "platform");
-  platforms.create(250, 150, "platform");
-  platforms.create(450, 250, "platform");
-  platforms.create(450, 5, "platform2");
-  platforms.create(450, 150, "platform");
+  platforms.create(250, 145, "platform");
+  platforms.create(450, 320, "platform");
+  platforms.create(650, 10, "platform2");
+  platforms.create(450, 100, "platform");
   platforms.create(450, 50, "platform");
-  platforms.create(650, 400, "platform2");
-  platforms.create(50, 400, "platform");
-  platforms.create(250, 400, "platform");
+  platforms.create(650, 600, "platform2");
+  platforms.create(50, 500, "platform");
+  platforms.create(250, 500, "platform");
   platforms.setAll("body.immovable", true);
 }
 
@@ -94,7 +94,7 @@ function badgeHandler(player, badge) {
 
 // setup game when the web page loads
 window.onload = function () {
-  game = new Phaser.Game(900, 600, Phaser.AUTO, "", {
+  game = new Phaser.Game(1000, 700, Phaser.AUTO, "", {
     preload: preload,
     create: create,
     update: update,
@@ -103,7 +103,7 @@ window.onload = function () {
 
   // before the game begins
   function preload() {
-    game.stage.backgroundColor = "#5db1ad";
+    game.stage.backgroundColor = "#800000";
 
     //Load images
     game.load.image("platform", "assets/platform_1.png");
@@ -112,7 +112,7 @@ window.onload = function () {
     
 
     //Load spritesheets
-    game.load.spritesheet("player", "assets/dog.png", 159.5, 165);
+    game.load.spritesheet("player", "assets/dog2.png", 159.3, 150);
     game.load.spritesheet("coin", "assets/coin.png", 36, 44);
     game.load.spritesheet("badge", "assets/badge.png", 42, 54);
     game.load.spritesheet("poison", "assets/poison.png", 32, 32);
