@@ -7,10 +7,14 @@ var items;
 var cursors;
 var jumpButton;
 var text;
+var text2
 var winningMessage;
+var losingMessage;
 var won = false;
 var currentScore = 0;
-var winningScore = 10;
+var winningScore = 105;
+var lives = 3;
+var lost = false;
 
 // add collectable items to the game
 function addItems() {
@@ -36,12 +40,12 @@ function addPlatforms() {
   platforms.create(10, 350, "platform");
   platforms.create(250, 150, "platform");
   platforms.create(450, 250, "platform");
-  platforms.create(450, 350, "platform2");
-  platforms.create(450, 550, "platform");
+  platforms.create(450, 5, "platform2");
+  platforms.create(450, 150, "platform");
   platforms.create(450, 50, "platform");
-  platforms.create(450, 450, "platform2");
-  platforms.create(50, 450, "platform");
-  platforms.create(250, 450, "platform");
+  platforms.create(650, 400, "platform2");
+  platforms.create(50, 400, "platform");
+  platforms.create(250, 400, "platform");
   platforms.setAll("body.immovable", true);
 }
 
@@ -69,9 +73,13 @@ function itemHandler(player, item) {
   }
   if(item.key == "poison"){
     currentScore = currentScore -25;
+    lives = lives -1;
   }
   if(item.key == "star"){
     currentScore = currentScore + 25;
+  }
+  if(lives === 0){
+    lost = true;
   }
   if (currentScore === winningScore) {
     createBadge();
@@ -86,7 +94,7 @@ function badgeHandler(player, badge) {
 
 // setup game when the web page loads
 window.onload = function () {
-  game = new Phaser.Game(800, 600, Phaser.AUTO, "", {
+  game = new Phaser.Game(900, 600, Phaser.AUTO, "", {
     preload: preload,
     create: create,
     update: update,
@@ -99,12 +107,12 @@ window.onload = function () {
 
     //Load images
     game.load.image("platform", "assets/platform_1.png");
-    game.load.image("platform2", "assets/platform_2.png");
+    game.load.image("platform2", "assets/obstacle.png");
     
     
 
     //Load spritesheets
-    game.load.spritesheet("player", "assets/chalkers.png", 48, 62);
+    game.load.spritesheet("player", "assets/dog.png", 159.5, 165);
     game.load.spritesheet("coin", "assets/coin.png", 36, 44);
     game.load.spritesheet("badge", "assets/badge.png", 42, 54);
     game.load.spritesheet("poison", "assets/poison.png", 32, 32);
@@ -129,16 +137,26 @@ window.onload = function () {
       font: "bold 24px Arial",
       fill: "white",
     });
+    text2 = game.add.text(16, 40, "LIVES: " + lives, {
+      font: "bold 24px Arial",
+      fill: "white",
+    });
     winningMessage = game.add.text(game.world.centerX, 275, "", {
       font: "bold 48px Arial",
       fill: "white",
     });
     winningMessage.anchor.setTo(0.5, 1);
+    losingMessage = game.add.text(game.world.centerX, 275, "", {
+      font: "bold 48px Arial",
+      fill: "red",
+    });
+    losingMessage.anchor.setTo(0.5, 1);
   }
 
   // while the game is running
   function update() {
     text.text = "SCORE: " + currentScore;
+    text2.text = "LIVES: "+lives;
     game.physics.arcade.collide(player, platforms);
     game.physics.arcade.overlap(player, items, itemHandler);
     game.physics.arcade.overlap(player, badges, badgeHandler);
@@ -170,6 +188,9 @@ window.onload = function () {
     // when the player winw the game
     if (won) {
       winningMessage.text = "YOU WIN!!!";
+    }
+    if(lost) {
+      losingMessage.text = "YOU LOST:(";
     }
   }
 
