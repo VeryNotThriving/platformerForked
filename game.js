@@ -112,7 +112,7 @@ window.onload = function () {
     
 
     //Load spritesheets
-    game.load.spritesheet("player", "assets/dog2.png", 159.3, 150);
+    game.load.spritesheet("player", "assets/dog2_adobe_express.png", 52.3, 35);
     game.load.spritesheet("coin", "assets/coin.png", 36, 44);
     game.load.spritesheet("badge", "assets/badge.png", 42, 54);
     game.load.spritesheet("poison", "assets/poison.png", 32, 32);
